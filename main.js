@@ -12,11 +12,13 @@ class HelloWorld {
         {
           opcode: 'isBlank',
           blockType: Scratch.BlockType.BOOLEAN,
-          text: 'is [v] blank?',
+          text: 'is [VALUE] blank?',
           arguments: {
-            v: {
-              type: Scratch.ArgumentType.STRING
+            VALUE: {
+              type: Scratch.ArgumentType.STRING,
+              defaultValue: "Apple"
           }
+        }
       ]
     };
   }
@@ -25,8 +27,8 @@ class HelloWorld {
     return 'Paper Minecraft Online';
   }
 
-  isBlank(args) {
-    return args.v === null;
+  isBlank({VALUE}) {
+    return VALUE === null;
   }
 
 }
