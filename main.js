@@ -5,32 +5,25 @@ class HelloWorld {
       name: 'Misc',
       blocks: [
         {
-          opcode: 'getName',
-          blockType: Scratch.BlockType.REPORTER,
-          text: 'Project Name'
-        },
-        {
-          opcode: 'isBlank',
+          opcode: 'isblank',
           blockType: Scratch.BlockType.BOOLEAN,
           text: 'is [VALUE] blank?',
           arguments: {
             VALUE: {
               type: Scratch.ArgumentType.STRING,
               defaultValue: "Apple"
+            }
           }
         }
       ]
     };
-  }
 
-  getName() {
-    return 'Paper Minecraft Online';
+    isblank(args) {
+      var data = args.VALUE;
+      if (data === null) {return true}
+      if (data === "") {return true}
+      return false
   }
-
-  isBlank({VALUE}) {
-    return VALUE === null;
-  }
-
 }
 
 Scratch.extensions.register(new HelloWorld());
