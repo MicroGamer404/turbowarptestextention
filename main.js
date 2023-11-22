@@ -1,30 +1,61 @@
-class HelloWorld {
+class Helper {
   getInfo() {
     return {
-      id: 'miscBlocks',
-      name: 'Misc',
+      id: 'wifi',
+      name: 'Internet',
       blocks: [
         {
-          opcode: 'isblank',
+          opcode: 'hasInternet',
           blockType: Scratch.BlockType.BOOLEAN,
-          text: 'is [VALUE] blank?',
+          text: 'device has internet?'
+        },
+        {
+          opcode: 'internetChanged',
+          blockType: Scratch.BlockType.EVENT,
+          text: 'When internet [INTERNETCONNECTION]',
+          isEdgeActivated: false,
+          shouldRestartExistingThreads: true,
           arguments: {
-            VALUE: {
+            INTERNETCONNECTION: {
               type: Scratch.ArgumentType.STRING,
-              defaultValue: "Apple"
+              menu: 'internet'
             }
           }
         }
-      ]
+      ],
+      menus: {
+        internet: {
+          acceptReporters: false,
+          items: [
+            {
+              text: "connected",
+              value: "connect"
+            },
+            {
+              text: "disconnected",
+              value: "disconnect"
+            }
+          ]
+        }
+      }
     };
 
-    isblank(args) {
-      var data = args.VALUE;
-      if (data === null) {return true}
-      if (data === "") {return true}
-      return false
-  }
+    hasInternet() {
+      return window.navigator.onLine
+    };
+
+
+    window.addEventListener('online' (e) => {
+      Scratch.vm.runtime.startHats('wifi_internetChanged', {
+      INTERNETCONNECTION: "connect"
+    });
+      
+    window.addEventListener('offline' (e) => {
+      Scratch.vm.runtime.startHats('wifi_internetChanged', {
+      INTERNETCONNECTION: "disconnect"
+    });
+    })
 }
 
-Scratch.extensions.register(new HelloWorld());
+Scratch.extensions.register(new Helper());
 
