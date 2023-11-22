@@ -26,7 +26,7 @@ class HelloWorld {
   }
 
   isBlank(args) {
-    return args.v === null
+    return args.v === null;
   }
 
 }
