@@ -1,21 +1,35 @@
-class TestExtension {
+class HelloWorld {
   getInfo() {
     return {
-      id: 'helloworld',
-      name: 'It works!',
+      id: 'miscBlocks',
+      name: 'Misc',
       blocks: [
         {
-          opcode: 'hello',
+          opcode: 'getName',
           blockType: Scratch.BlockType.REPORTER,
-          text: 'Hello!'
-        }
+          text: 'Project Name'
+        },
+        {
+          opcode: 'isBlank',
+          blockType: Scratch.BlockType.BOOLEAN,
+          text: 'is [v] blank?',
+          arguments: {
+            v: {
+              type: Scratch.ArgumentType.STRING
+          }
       ]
     };
   }
 
-  hello() {
-    return 'World!';
+  getName() {
+    return 'Paper Minecraft Online';
   }
+
+  isBlank(args) {
+    return args.v === null
+  }
+
 }
 
-scratch.extension.register(new TestExtension());
+Scratch.extensions.register(new HelloWorld());
+
