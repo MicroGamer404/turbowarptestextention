@@ -5,38 +5,32 @@
     throw new Error('This example must run unsandboxed');
   }
 
-  class WhenKeyPressed {
+  class Internet {
     getInfo() {
       return {
-        id: 'restartexampleunsandboxed',
-        name: 'Restart Threads Example',
+        id: 'internet',
+        name: 'Internet',
         blocks: [
           {
             blockType: Scratch.BlockType.EVENT,
-            opcode: 'whenPressed',
-            text: 'when [KEY] key pressed',
+            opcode: 'internetConnectionChanged',
+            text: 'When internet [STATE]',
             isEdgeActivated: false,
             shouldRestartExistingThreads: true,
             arguments: {
-              KEY: {
+              STATE: {
                 type: Scratch.ArgumentType.STRING,
-                menu: 'key'
+                menu: 'wifi'
               }
             }
           }
         ],
         menus: {
-          key: {
+          wifi: {
             acceptReporters: false,
             items: [
-              {
-                text: 'space',
-                value: ' '
-              },
-              'a',
-              'b',
-              'c',
-              // ...
+              'connected',
+              'disconnected'
             ]
           }
         }
@@ -44,11 +38,22 @@
     }
   }
 
-  document.addEventListener('keydown', (e) => {
-    Scratch.vm.runtime.startHats('restartexampleunsandboxed_whenPressed', {
-      KEY: e.key
-    });
+  window.addEventListener('online', (e) => {
+    Scratch.vm.runtime.startHats('internet_internetConnectionChanged', {
+      STATE: 'connected'
+    );
   });
 
-  Scratch.extensions.register(new WhenKeyPressed());
+  window.addEventListener('offline', (e) => {
+    Scratch.vm.runtime.startHats('internet_internetConnectionChanged', {
+      STATE: 'disconnected'
+    );
+  });
+  // document.addEventListener('keydown', (e) => {
+  //   Scratch.vm.runtime.startHats('restartexampleunsandboxed_whenPressed', {
+  //     KEY: e.key
+  //   });
+  // });
+
+  Scratch.extensions.register(new Internet());
 })(Scratch);
